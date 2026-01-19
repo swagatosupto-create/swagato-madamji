@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Memory for Madam Ji</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{
+ height:100%;
+ background:#05070f;
+ font-family:system-ui,-apple-system,BlinkMacSystemFont;
+ color:#fff;
+ overflow:hidden;
+}
+
+.page{
+ position:absolute;inset:0;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+ transition:opacity .6s ease;
+}
+.hidden{opacity:0;pointer-events:none}
+
+.bg1{background:linear-gradient(#1b263b,#05070f)}
+.bg2{background:linear-gradient(#243b55,#141e30)}
+.bg3{background:linear-gradient(#0f2027,#05070f)}
+.bg4{background:linear-gradient(#2c5364,#0f2027)}
+.bg5{background:linear-gradient(#3a0ca3,#03001e)}
+.bg6{background:linear-gradient(#000428,#004e92)}
+
+.content{
+ text-align:center;
+ max-width:420px;
+ width:100%;
+}
+
+.character{
+ width:72px;
+ margin:0 auto 14px;
+ animation:dance 1.6s infinite ease-in-out;
+}
+@keyframes dance{50%{transform:translateY(-8px)}}
+
+#typingName{
+ font-size:2.2rem;
+ font-weight:700;
+ margin-bottom:12px;
+}
+
+p{
+ font-size:1.05rem;
+ line-height:1.6;
+ opacity:.95;
+}
+
+button{
+ margin-top:18px;
+ padding:14px 40px;
+ border-radius:40px;
+ border:none;
+ font-size:1rem;
+ font-weight:600;
+ width:100%;
+ max-width:260px;
+}
+
+.yes{background:#ff4d6d;color:#fff}
+.no{background:#fff;color:#ff4d6d;margin-top:10px}
+
+.photoFrame{
+ width:200px;
+ height:260px;
+ margin:0 auto 16px;
+ border-radius:14px;
+ overflow:hidden;
+ animation:slideUp .9s ease forwards;
+}
+@keyframes slideUp{
+ from{transform:translateY(40px);opacity:0}
+ to{transform:none;opacity:1}
+}
+.photoFrame img{
+ width:100%;height:100%;object-fit:cover;
+}
+
+.envelope{
+ position:absolute;
+ bottom:-240px;
+ width:300px;
+ height:190px;
+ animation:rise 1.4s ease forwards;
+}
+@keyframes rise{to{bottom:18%}}
+
+.env-body{
+ background:#1f4068;
+ height:100%;
+ border-radius:16px;
+ position:relative;
+}
+.env-lid{
+ position:absolute;
+ top:0;
+ width:100%;
+ height:55%;
+ background:#162447;
+ border-radius:16px 16px 0 0;
+ transform-origin:top;
+ transition:1.2s ease;
+}
+.envelope.open .env-lid{
+ transform:rotateX(-160deg);
+}
+
+.waitText{
+ position:absolute;
+ top:-65px;
+ width:100%;
+ text-align:center;
+ font-size:.95rem;
+ color:#ffd6e0;
+}
+
+#finalMessage{
+ position:absolute;
+ bottom:6%;
+ background:rgba(0,0,0,.6);
+ padding:20px;
+ border-radius:16px;
+ opacity:0;
+ transform:translateY(20px);
+ transition:1s ease;
+}
+#finalMessage.show{
+ opacity:1;
+ transform:none;
+}
+
+.balloon{
+ position:absolute;
+ bottom:-60px;
+ width:22px;
+ height:30px;
+ border-radius:50%;
+ animation:fly 6s linear forwards;
+}
+@keyframes fly{
+ to{transform:translateY(-120vh)}
+}
+
+/* NYLON HEART */
+#nylonHeart{
+ position:fixed;inset:0;
+ background:#05070f;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ z-index:999;
+}
+canvas{width:280px;height:260px}
+</style>
+</head>
+
+<body>
+
+<audio id="loveMusic" src="love.mp3" loop></audio>
+<audio id="sadMusic" src="sad.mp3" loop></audio>
+
+<!-- PAGE 1 -->
+<div class="page bg1" id="page1">
+ <div class="content">
+  <img class="character" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif">
+  <div id="typingName"></div>
+  <p>
+   এই নীরব রাতের মতোই<br>
+   আমার ভালোবাসা শান্ত ও গভীর<br><br>
+   আপনি কি আমার অনুভূতিটুকু গ্রহণ করবেন?
+  </p>
+  <button class="yes" onclick="yesClick()">YES</button>
+  <button class="no" id="noBtn">NO</button>
+ </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page bg2 hidden" id="page2">
+ <p>আপনি “YES” বলার মাধ্যমে আমার পৃথিবীটাকে সুন্দর করে দিলেন 💖</p>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page bg3 hidden" id="page3">
+ <div class="content">
+  <div class="photoFrame">
+   <img src="madamji.jpg">
+  </div>
+  <p>
+   এই ছবিটা আমার সবচেয়ে প্রিয়,<br>
+   কারণ এখানে আছে আমার প্রিয় মানুষ — আপনি
+  </p>
+ </div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page bg4 hidden" id="page4">
+ <div class="content">
+  <h2>Valentine Countdown</h2>
+  <h1 id="countdown"></h1>
+ </div>
+</div>
+
+<!-- PAGE 5 -->
+<div class="page bg5 hidden" id="page5">
+ <p>
+  কেউ আপনাকে ভালোবাসবে,<br>
+  কিন্তু আমি আপনাকে অনুভব করি<br>
+  আমার প্রতিটি নিঃশ্বাসে
+ </p>
+</div>
+
+<!-- PAGE 6 -->
+<div class="page bg6 hidden" id="page6">
+ <div class="envelope" id="envelope">
+  <div class="waitText">
+   ৫ সেকেন্ড অপেক্ষা করুন<br>
+   আপনার জন্য বিশেষ কিছু 💌
+  </div>
+  <div class="env-body">
+   <div class="env-lid"></div>
+  </div>
+ </div>
+
+ <div id="finalMessage">
+  Madam Ji,<br><br>
+  আমি আপনাকে ভালোবাসি—<br>
+  নিঃশর্ত, নীরব আর গভীরভাবে।<br><br>
+  আপনি থাকুন বা না থাকুন,<br>
+  এই অনুভূতি চিরকাল থাকবে।<br><br>
+  — Swagat 💞<br><br>
+  <button onclick="memory()">Memory</button>
+ </div>
+</div>
+
+<script>
+const loveMusic=document.getElementById("loveMusic");
+const sadMusic=document.getElementById("sadMusic");
+
+let page=1;
+
+function goPage(n){
+ document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
+ document.getElementById("page"+n).classList.remove("hidden");
+ if(n===4)startCountdown();
+ if(n===6)startEnvelope();
+}
+
+function startTyping(){
+ const name="Madam Ji";
+ let i=0;
+ typingName.innerHTML="";
+ const t=setInterval(()=>{
+  typingName.innerHTML+=name[i++];
+  if(i>=name.length)clearInterval(t);
+ },160);
+}
+startTyping();
+
+function yesClick(){
+ localStorage.setItem("herYES","true");
+ sadMusic.pause();
+ loveMusic.play();
+ goPage(2);
+ setTimeout(()=>goPage(3),1200);
+ setTimeout(()=>goPage(4),2400);
+ setTimeout(()=>goPage(5),3600);
+ setTimeout(()=>goPage(6),4800);
+}
+
+let noTry=0;
+noBtn.onclick=()=>{
+ noTry++;
+ if(noTry<6){
+  noBtn.style.transform=`translate(${Math.random()*40-20}px,${Math.random()*40-20}px)`;
+ }else{
+  loveMusic.pause();
+  sadMusic.play();
+  alert("আপনার সিদ্ধান্ত যাই হোক, আমি আপনাকে সম্মান করি।");
+ }
+};
+
+function startCountdown(){
+ setInterval(()=>{
+  let d=new Date("Feb 14, 2026")-new Date();
+  countdown.innerHTML=
+   Math.floor(d/86400000)+"d "+
+   Math.floor(d/3600000)%24+"h "+
+   Math.floor(d/60000)%60+"m "+
+   Math.floor(d/1000)%60+"s";
+ },1000);
+}
+
+function startEnvelope(){
+ let s=5;
+ const t=setInterval(()=>{
+  if(--s<=0){
+   clearInterval(t);
+   envelope.classList.add("open");
+   for(let i=0;i<18;i++)balloon();
+   setTimeout(()=>finalMessage.classList.add("show"),900);
+  }
+ },1000);
+}
+
+function balloon(){
+ let b=document.createElement("div");
+ b.className="balloon";
+ b.style.left=Math.random()*100+"%";
+ b.style.background=`hsl(${Math.random()*360},80%,65%)`;
+ document.body.appendChild(b);
+}
+
+function memory(){
+ showHeart();
+}
+
+function showHeart(){
+ const o=document.createElement("div");
+ o.id="nylonHeart";
+ o.innerHTML='<canvas id="c" width="280" height="260"></canvas>';
+ document.body.appendChild(o);
+ const ctx=c.getContext("2d");
+ const pts=[];
+ for(let t=0;t<Math.PI*2;t+=.18){
+  pts.push({
+   x:140+70*Math.pow(Math.sin(t),3),
+   y:130-(45*Math.cos(t)-15*Math.cos(2*t))
+  });
+ }
+ let i=1;
+ function draw(){
+  if(i>=pts.length){
+   setTimeout(()=>{
+    o.remove();
+    goPage(1);
+    startTyping();
+   },900);
+   return;
+  }
+  ctx.strokeStyle=`hsl(${i*15},80%,65%)`;
+  ctx.lineWidth=2;
+  ctx.beginPath();
+  ctx.moveTo(pts[i-1].x,pts[i-1].y);
+  ctx.lineTo(pts[i].x,pts[i].y);
+  ctx.stroke();
+  i++;
+  requestAnimationFrame(draw);
+ }
+ draw();
+}
+</script>
+
+</body>
+</html>
