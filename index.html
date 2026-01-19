@@ -2,230 +2,170 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Memory for Madam Ji</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{box-sizing:border-box}
 html,body{
- height:100%;
- background:#05070f;
- font-family:system-ui,-apple-system,BlinkMacSystemFont;
- color:#fff;
- overflow:hidden;
+ margin:0;height:100%;overflow:hidden;
+ font-family:'Segoe UI',sans-serif;
+ background:#05070f;color:#fff;
 }
 
 .page{
  position:absolute;inset:0;
- display:flex;
- align-items:center;
- justify-content:center;
- padding:20px;
- transition:opacity .6s ease;
+ display:flex;justify-content:center;align-items:center;
+ transition:opacity 1s;
 }
 .hidden{opacity:0;pointer-events:none}
 
-.bg1{background:linear-gradient(#1b263b,#05070f)}
-.bg2{background:linear-gradient(#243b55,#141e30)}
-.bg3{background:linear-gradient(#0f2027,#05070f)}
-.bg4{background:linear-gradient(#2c5364,#0f2027)}
-.bg5{background:linear-gradient(#3a0ca3,#03001e)}
-.bg6{background:linear-gradient(#000428,#004e92)}
+.bg1{background:radial-gradient(circle,#1b263b,#05070f)}
+.bg2{background:radial-gradient(circle,#243b55,#141e30)}
+.bg3{background:radial-gradient(circle,#0f2027,#05070f)}
+.bg4{background:radial-gradient(circle,#2c5364,#0f2027)}
+.bg5{background:radial-gradient(circle,#3a0ca3,#03001e)}
+.bg6{background:radial-gradient(circle,#000428,#004e92)}
 
-.content{
- text-align:center;
- max-width:420px;
- width:100%;
-}
+.content{display:flex;gap:20px;align-items:center;max-width:90%}
 
 .character{
- width:72px;
- margin:0 auto 14px;
- animation:dance 1.6s infinite ease-in-out;
+ width:90px;
+ animation:dance 1.5s infinite ease-in-out;
 }
-@keyframes dance{50%{transform:translateY(-8px)}}
-
-#typingName{
- font-size:2.2rem;
- font-weight:700;
- margin-bottom:12px;
-}
-
-p{
- font-size:1.05rem;
- line-height:1.6;
- opacity:.95;
-}
+@keyframes dance{50%{transform:translateY(-12px) rotate(4deg)}}
 
 button{
- margin-top:18px;
- padding:14px 40px;
- border-radius:40px;
- border:none;
- font-size:1rem;
- font-weight:600;
- width:100%;
- max-width:260px;
+ padding:12px 36px;border:none;border-radius:30px;
+ font-size:1em;cursor:pointer;margin-top:18px;
 }
-
 .yes{background:#ff4d6d;color:#fff}
-.no{background:#fff;color:#ff4d6d;margin-top:10px}
+.no{background:#fff;color:#ff4d6d}
+
+#typingName{font-size:2.6em;font-weight:700;margin-bottom:12px}
 
 .photoFrame{
- width:200px;
- height:260px;
- margin:0 auto 16px;
- border-radius:14px;
- overflow:hidden;
- animation:slideUp .9s ease forwards;
+ width:220px;height:300px;border-radius:16px;
+ overflow:hidden;animation:photoUp 1.4s forwards;
+ box-shadow:0 25px 60px rgba(0,0,0,.6);
 }
-@keyframes slideUp{
- from{transform:translateY(40px);opacity:0}
- to{transform:none;opacity:1}
+@keyframes photoUp{
+ from{clip-path:inset(100% 0 0 0)}
+ to{clip-path:inset(0)}
 }
-.photoFrame img{
- width:100%;height:100%;object-fit:cover;
-}
+.photoFrame img{width:100%;height:100%;object-fit:cover}
 
 .envelope{
- position:absolute;
- bottom:-240px;
- width:300px;
- height:190px;
- animation:rise 1.4s ease forwards;
+ position:absolute;bottom:-260px;width:380px;height:240px;
+ animation:rise 2s forwards;
 }
 @keyframes rise{to{bottom:18%}}
 
 .env-body{
- background:#1f4068;
- height:100%;
- border-radius:16px;
+ background:linear-gradient(135deg,#1f4068,#1b1b2f);
+ width:100%;height:100%;border-radius:20px;
+ box-shadow:0 40px 80px rgba(0,0,0,.9);
  position:relative;
 }
 .env-lid{
- position:absolute;
- top:0;
- width:100%;
- height:55%;
- background:#162447;
- border-radius:16px 16px 0 0;
- transform-origin:top;
- transition:1.2s ease;
+ position:absolute;top:0;width:100%;height:55%;
+ background:#162447;border-radius:20px 20px 0 0;
+ transform-origin:top;transition:1.6s;
 }
-.envelope.open .env-lid{
- transform:rotateX(-160deg);
-}
+.envelope.open .env-lid{transform:rotateX(-165deg)}
 
 .waitText{
- position:absolute;
- top:-65px;
- width:100%;
- text-align:center;
- font-size:.95rem;
- color:#ffd6e0;
+ position:absolute;top:-75px;text-align:center;
+ width:100%;color:#ffd6e0;font-size:1.1em;
 }
 
 #finalMessage{
- position:absolute;
- bottom:6%;
- background:rgba(0,0,0,.6);
- padding:20px;
- border-radius:16px;
- opacity:0;
- transform:translateY(20px);
- transition:1s ease;
+ position:absolute;bottom:6%;
+ background:rgba(0,0,0,.7);
+ padding:26px;border-radius:20px;
+ max-width:88%;opacity:0;
 }
-#finalMessage.show{
- opacity:1;
- transform:none;
+.show{animation:fadeUp 2s forwards}
+@keyframes fadeUp{
+ to{opacity:1;transform:translateY(-14px)}
 }
 
 .balloon{
- position:absolute;
- bottom:-60px;
- width:22px;
- height:30px;
- border-radius:50%;
- animation:fly 6s linear forwards;
+ position:absolute;bottom:-80px;width:26px;height:36px;
+ border-radius:50%;animation:fly 7s linear forwards;
 }
-@keyframes fly{
- to{transform:translateY(-120vh)}
-}
+@keyframes fly{to{transform:translateY(-140vh)}}
 
 /* NYLON HEART */
 #nylonHeart{
  position:fixed;inset:0;
  background:#05070f;
- display:flex;
- align-items:center;
- justify-content:center;
+ display:flex;justify-content:center;align-items:center;
  z-index:999;
 }
-canvas{width:280px;height:260px}
+canvas{width:340px;height:320px}
 </style>
 </head>
 
 <body>
 
-<audio id="loveMusic" src="love.mp3" loop></audio>
-<audio id="sadMusic" src="sad.mp3" loop></audio>
+<audio id="loveMusic" loop src="love.mp3"></audio>
+<audio id="sadMusic" loop src="sad.mp3"></audio>
 
 <!-- PAGE 1 -->
 <div class="page bg1" id="page1">
  <div class="content">
   <img class="character" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif">
-  <div id="typingName"></div>
-  <p>
-   এই নীরব রাতের মতোই<br>
-   আমার ভালোবাসা শান্ত ও গভীর<br><br>
-   আপনি কি আমার অনুভূতিটুকু গ্রহণ করবেন?
-  </p>
-  <button class="yes" onclick="yesClick()">YES</button>
-  <button class="no" id="noBtn">NO</button>
+  <div>
+   <div id="typingName"></div>
+   <p>
+    এই নীরব রাতের মতোই<br>
+    আমার ভালোবাসা গভীর ও শান্ত<br><br>
+    আপনি কি আমার এই অনুভূতিটুকু গ্রহণ করবেন?
+   </p>
+   <button class="yes" onclick="yesClick()">YES</button>
+   <button class="no" id="noBtn">NO</button>
+  </div>
  </div>
 </div>
 
-<!-- PAGE 2 -->
 <div class="page bg2 hidden" id="page2">
- <p>আপনি “YES” বলার মাধ্যমে আমার পৃথিবীটাকে সুন্দর করে দিলেন 💖</p>
+ <p>আপনি “YES” বলার মাধ্যমে আমার হৃদয়ের সব দরজা খুলে দিলেন 💖</p>
 </div>
 
-<!-- PAGE 3 -->
 <div class="page bg3 hidden" id="page3">
- <div class="content">
-  <div class="photoFrame">
-   <img src="madamji.jpg">
-  </div>
+ <div>
+  <div class="photoFrame"><img src="madamji.jpg"></div>
   <p>
-   এই ছবিটা আমার সবচেয়ে প্রিয়,<br>
+   এই ছবিটা শুধু সুন্দর নয়,<br>
+   এটা আমার সবচেয়ে প্রিয় স্মৃতি<br>
    কারণ এখানে আছে আমার প্রিয় মানুষ — আপনি
   </p>
  </div>
 </div>
 
-<!-- PAGE 4 -->
 <div class="page bg4 hidden" id="page4">
- <div class="content">
+ <div>
   <h2>Valentine Countdown</h2>
   <h1 id="countdown"></h1>
  </div>
 </div>
 
-<!-- PAGE 5 -->
 <div class="page bg5 hidden" id="page5">
  <p>
-  কেউ আপনাকে ভালোবাসবে,<br>
-  কিন্তু আমি আপনাকে অনুভব করি<br>
+  Madam Ji,<br><br>
+  কেউ হয়তো আপনাকে পছন্দ করবে,<br>
+  কেউ ভালোবাসবে,<br>
+  কিন্তু আমি আপনাকে অনুভব করি—<br>
   আমার প্রতিটি নিঃশ্বাসে
  </p>
 </div>
 
-<!-- PAGE 6 -->
 <div class="page bg6 hidden" id="page6">
  <div class="envelope" id="envelope">
   <div class="waitText">
    ৫ সেকেন্ড অপেক্ষা করুন<br>
-   আপনার জন্য বিশেষ কিছু 💌
+   ভেতরে আছে আপনার জন্য বিশেষ কিছু 💌
   </div>
   <div class="env-body">
    <div class="env-lid"></div>
@@ -233,12 +173,23 @@ canvas{width:280px;height:260px}
  </div>
 
  <div id="finalMessage">
+  <b>💖 Valentine Surprise 💖</b><br><br>
+
   Madam Ji,<br><br>
   আমি আপনাকে ভালোবাসি—<br>
-  নিঃশর্ত, নীরব আর গভীরভাবে।<br><br>
+  কোনো শর্ত ছাড়া,<br>
+  কোনো প্রত্যাশা ছাড়া,<br>
+  শুধু গভীর সম্মান আর যত্ন নিয়ে।<br><br>
+
   আপনি থাকুন বা না থাকুন,<br>
-  এই অনুভূতি চিরকাল থাকবে।<br><br>
+  আমার ভালোবাসা থাকবে ঠিক আগের মতোই—<br>
+  শান্ত, স্থির, এবং নিঃস্বার্থ।<br><br>
+
+  এই অনুভূতিটাই আমার জীবনের<br>
+  সবচেয়ে সুন্দর উপহার।<br><br>
+
   — Swagat 💞<br><br>
+
   <button onclick="memory()">Memory</button>
  </div>
 </div>
@@ -247,48 +198,43 @@ canvas{width:280px;height:260px}
 const loveMusic=document.getElementById("loveMusic");
 const sadMusic=document.getElementById("sadMusic");
 
-let page=1;
-
-function goPage(n){
- document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
- document.getElementById("page"+n).classList.remove("hidden");
- if(n===4)startCountdown();
- if(n===6)startEnvelope();
-}
-
 function startTyping(){
- const name="Madam Ji";
- let i=0;
  typingName.innerHTML="";
- const t=setInterval(()=>{
-  typingName.innerHTML+=name[i++];
-  if(i>=name.length)clearInterval(t);
- },160);
+ let n="Madam Ji",i=0;
+ let t=setInterval(()=>{
+  typingName.innerHTML+=n[i++];
+  if(i>=n.length) clearInterval(t);
+ },180);
 }
 startTyping();
 
 function yesClick(){
  localStorage.setItem("herYES","true");
- sadMusic.pause();
- loveMusic.play();
+ sadMusic.pause();loveMusic.play();
  goPage(2);
- setTimeout(()=>goPage(3),1200);
- setTimeout(()=>goPage(4),2400);
- setTimeout(()=>goPage(5),3600);
- setTimeout(()=>goPage(6),4800);
 }
 
-let noTry=0;
+let noCount=0;
 noBtn.onclick=()=>{
- noTry++;
- if(noTry<6){
-  noBtn.style.transform=`translate(${Math.random()*40-20}px,${Math.random()*40-20}px)`;
+ noCount++;
+ if(noCount<6){
+  noBtn.style.position="absolute";
+  noBtn.style.left=Math.random()*70+"%";
+  noBtn.style.top=Math.random()*70+"%";
  }else{
-  loveMusic.pause();
-  sadMusic.play();
-  alert("আপনার সিদ্ধান্ত যাই হোক, আমি আপনাকে সম্মান করি।");
+  loveMusic.pause();sadMusic.play();
+  alert("আপনার সিদ্ধান্ত যাই হোক, আমি আপনাকে সম্মান করি এবং ভালোবাসি।");
  }
 };
+
+function goPage(n){
+ document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
+ document.getElementById("page"+n).classList.remove("hidden");
+ if(n==4)startCountdown();
+ if(n==6)startEnvelope();
+}
+
+setTimeout(()=>goPage(2),1500);
 
 function startCountdown(){
  setInterval(()=>{
@@ -303,17 +249,17 @@ function startCountdown(){
 
 function startEnvelope(){
  let s=5;
- const t=setInterval(()=>{
+ let t=setInterval(()=>{
   if(--s<=0){
    clearInterval(t);
    envelope.classList.add("open");
-   for(let i=0;i<18;i++)balloon();
-   setTimeout(()=>finalMessage.classList.add("show"),900);
+   for(let i=0;i<35;i++)launchBalloon();
+   setTimeout(()=>finalMessage.classList.add("show"),1000);
   }
  },1000);
 }
 
-function balloon(){
+function launchBalloon(){
  let b=document.createElement("div");
  b.className="balloon";
  b.style.left=Math.random()*100+"%";
@@ -322,42 +268,52 @@ function balloon(){
 }
 
 function memory(){
- showHeart();
+ showNylonHeart();
 }
 
-function showHeart(){
- const o=document.createElement("div");
+function showNylonHeart(){
+ let o=document.createElement("div");
  o.id="nylonHeart";
- o.innerHTML='<canvas id="c" width="280" height="260"></canvas>';
+ o.innerHTML='<canvas id="c" width="340" height="320"></canvas>';
  document.body.appendChild(o);
- const ctx=c.getContext("2d");
- const pts=[];
- for(let t=0;t<Math.PI*2;t+=.18){
+
+ let ctx=c.getContext("2d");
+ let pts=[];
+ for(let t=0;t<Math.PI*2;t+=0.15){
   pts.push({
-   x:140+70*Math.pow(Math.sin(t),3),
-   y:130-(45*Math.cos(t)-15*Math.cos(2*t))
+   x:170+85*Math.pow(Math.sin(t),3),
+   y:160-(55*Math.cos(t)-20*Math.cos(2*t)-10*Math.cos(3*t))
   });
  }
- let i=1;
- function draw(){
+ let i=0,p=0;
+ function anim(){
   if(i>=pts.length){
    setTimeout(()=>{
-    o.remove();
-    goPage(1);
-    startTyping();
-   },900);
+    document.body.removeChild(o);
+    goPage(1);startTyping();
+   },1200);
    return;
   }
-  ctx.strokeStyle=`hsl(${i*15},80%,65%)`;
-  ctx.lineWidth=2;
+  if(i>0){
+   p+=0.1;
+   ctx.strokeStyle=`hsl(${i*14},90%,70%)`;
+   ctx.lineWidth=2;
+   ctx.beginPath();
+   ctx.moveTo(pts[i-1].x,pts[i-1].y);
+   ctx.lineTo(
+    pts[i-1].x+(pts[i].x-pts[i-1].x)*p,
+    pts[i-1].y+(pts[i].y-pts[i-1].y)*p
+   );
+   ctx.stroke();
+   if(p>=1){p=0;i++;}
+  }else i++;
+  ctx.fillStyle="#ffd6e0";
   ctx.beginPath();
-  ctx.moveTo(pts[i-1].x,pts[i-1].y);
-  ctx.lineTo(pts[i].x,pts[i].y);
-  ctx.stroke();
-  i++;
-  requestAnimationFrame(draw);
+  ctx.arc(pts[i-1].x,pts[i-1].y,3,0,Math.PI*2);
+  ctx.fill();
+  requestAnimationFrame(anim);
  }
- draw();
+ anim();
 }
 </script>
 
